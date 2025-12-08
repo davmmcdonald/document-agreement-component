@@ -1,44 +1,46 @@
 <div class="container">
     <h1>Legal Document Review</h1>
-    <p class="instructions">Please review each document and check the box to indicate your agreement. You must agree to
-        all documents before continuing.</p>
+    <p class="instructions">Please review each document and check the box to indicate your agreement. You must agree to all documents before continuing.</p>
     <form [formGroup]="agreementForm">
-        @for (group of groupedDocuments; track group) {
+        @if (loading()) {
+        <div class="loading"></div>
+        }
+        @for (group of groupedDocuments(); track group.type) {
         <div class="document">
             <div class="details">
                 <div>
-                    <h2>
-                        {{ replaceUnderscores(group.type) | titlecase }}
-                        <span class="version">(v{{ group.active.version }})</span>
+                    <h2>{{ replaceUnderscores(group.type) | titlecase }} <span class="version">(v{{ group.default.version }})</span>
                     </h2>
-                    @if (group.active.changesOnly) {
+                    @if (group.default.changesOnly) {
                     <div class="tag">Changes-Only</div>
                     }
                 </div>
                 <div class="button-wrapper">
-                    @if (group.active.changesOnly) {
-                    <button class="button">Download Complete Document</button>
+                    @if (group.default.changesOnly) {
+                    <a [href]="getFullDocument(group)" class="button" target="_blank">View Full Document</a>
                     }
-                    <button class="button" (click)="toggleFullscreen(group)">
+                    <button type="button" class="button" (click)="toggleFullscreen(group)">
                         <i class="fa-solid fa-expand"></i>
                     </button>
                 </div>
             </div>
-            <div class="render" [class.fullscreen]="group.fullscreen">
+            <div class="wrapper" [class.fullscreen]="group.fullscreen">
                 @if (group.fullscreen) {
-                <div class="minimize" (click)="toggleFullscreen(group)">
-                    <i class="fa-solid fa-xmark"></i>
+                <div class="toolbar">
+                    <button type="button" class="minimize" (click)="toggleFullscreen(group)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
                 }
-                <iframe src="/assets/agreement-1.pdf" frameborder="0"></iframe>
+                <iframe [src]="group.default.safeUrl"></iframe>
             </div>
             <label>
-                <input type="checkbox" [formControlName]="group.type" class="checkbox">
+                <input class="checkbox" type="checkbox" [formControlName]="group.type">
                 I agree to the terms of the complete {{ replaceUnderscores(group.type) | titlecase }}
             </label>
         </div>
         }
-        <button class="button primary" (click)="submitForm()">Submit</button>
+        <button type="submit" class="button primary" (click)="submitForm($event)">Submit</button>
     </form>
-    <div class="error" [class.visible]="error.visible">{{ error.message }}</div>
+    <div class="alert" [class.visible]="alert().visible" [class.error]="alert().isError">{{ alert().message }}</div>
 </div>

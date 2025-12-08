@@ -31,6 +31,6 @@ export class DocumentAgreementService {
   ];
 
   retrieveDocuments(): Observable<LegalDocument[]> {
-    return of(this.sampleData).pipe(delay(1000));
+    return of(this.sampleData).pipe(delay(3000));
   }
 }
