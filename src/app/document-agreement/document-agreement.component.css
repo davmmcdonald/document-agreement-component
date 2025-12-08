@@ -41,6 +41,7 @@
     justify-content: space-between;
     align-items: start;
     gap: 12px;
+    flex-wrap: wrap;
     margin-bottom: 24px;
 }
 
@@ -66,13 +67,14 @@
 .button {
     display: inline-block;
     place-content: center;
-    height: 36px;
+    min-height: 36px;
     padding-inline: 12px;
     background-color: var(--color-primary);
     border: none;
     border-radius: 8px;
     outline: none;
     font-size: 1rem;
+    text-align: center;
     color: #ffffff;
     cursor: pointer;
     text-decoration: none;
