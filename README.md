@@ -1,59 +1,76 @@
-# DocumentAgreementComponent
+# Document Agreement Component
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.0.
+A modern Angular 18+ standalone component that lets users view legal documents (PDFs), review revisions, and agree to document types — with validation, inline viewing, fullscreen support, and reactive state management.
 
-## Development server
+---
 
-To start a local development server, run:
+## Setup Instructions
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/davmmcdonald/document-agreement-component.git
+cd document-agreement-component
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Run the development server:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Then open your browser to `http://localhost:4200`.
 
-## Code scaffolding
+4. The current implementation uses a **mock endpoint / mock service** to provide document metadata and PDFs (from `src/assets/`). No real backend is required to run or test the component.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## Assumptions Made
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+* All legal documents are delivered as PDFs.
+* Documents referenced by the mock service correspond to files placed under the `assets/` directory.
+* For each document **type**, there may be either:
 
-```bash
-ng generate --help
-```
+  * A single “full” document, or
+  * A pair of documents: one “full” and one “changes-only” revision.
+* The user’s agreement is per **document type**, not per individual file.
+* On submission, the “full” document ID is submitted — even if the user reviewed only the “changes-only” version.
+* Because this is a sample / demo, no persistent backend or user authentication is implemented — state isn’t stored beyond the session.
 
-## Building
+---
 
-To build the project run:
+## Design Decisions & Tradeoffs
 
-```bash
-ng build
-```
+**What this component uses & why**
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+* Angular 18+ **standalone component** + **signals**: simplifies state management (loading, document groups, alerts) without requiring a full NgModule wrapper.
+* **Reactive Forms** with dynamic controls and `Validators.requiredTrue`: cleanly handles agreement validation across an arbitrary number of document types.
+* **`iframe` for PDF display**: simple, built‑in browser feature; works across platforms without extra dependencies.
+* **Fullscreen toggle per document**: improves readability especially for longer or detailed PDFs.
+* **Alert / notification system with auto‑fade**: lightweight, easy to integrate, improves UX on submission or error states.
 
-## Running unit tests
+**Tradeoffs / Limitations**
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+* The component relies on a mock service — while great for quick setup and testing, a real backend integration would be needed for production, including network error handling and secure PDF retrieval.
+* Using `iframe` for PDFs is straightforward, but might not provide the best UX on mobile or smaller screens (e.g. pinch‑to-zoom, search in PDF, annotations). A dedicated PDF library might improve that.
+* Alerts are simple and auto‑fade — but a more robust notification or feedback system (to handle repeated alerts, stacking, dismissal) could be more user‑friendly.
+* No persistence of agreement state — if the user refreshes or navigates away, agreements are lost.
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+## Additional Features / Improvements You Could Add
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* Persist agreement state to a backend (e.g. via API) so users’ consent is recorded.
+* Implement a **full PDF viewer** using a library (with zoom, search, annotation, mobile-friendly UI).
+* Add **mobile-first responsive design**, improving layout and readability on smaller screens.
+* Show **skeleton loaders or per-document loading indicators** especially if retrieving many PDFs or large files.
+* Allow users to **download** the full (or revision) documents.
+* Extend submission to include **non-agreed documents + optional comments**, e.g. “I disagree because…”.
+* Add accessibility improvements — e.g. better keyboard navigation for fullscreen toggle, aria‑attributes for dynamic alerts or PDF frames.
+* Add unit tests / integration tests to cover various states (loading, error, submission, form validation).
