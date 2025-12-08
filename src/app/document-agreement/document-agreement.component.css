@@ -1,0 +1,132 @@
+:host {
+    --color-primary: darkslategrey;
+    --color-highlight: slategrey;
+    --color-ltgrey1: #eeeeee;
+    --color-ltgrey2: #dddddd;
+    --color-dkgrey: #777777;
+    --color-error: #ff7171;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto 48px auto;
+}
+
+.instructions {
+    margin-block: 12px 24px;
+    color: var(--color-dkgrey);
+}
+
+.document {
+    margin-bottom: 24px;
+    padding: 24px;
+    background-color: var(--color-ltgrey1);
+    border: 1px solid var(--color-ltgrey2);
+    border-radius: 6px;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.version {
+    color: var(--color-dkgrey);
+}
+
+.tag {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 3px 6px;
+    background-color: var(--color-highlight);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: #ffffff;
+}
+
+.button-wrapper {
+    display: flex;
+    gap: 6px;
+}
+
+.button {
+    height: 36px;
+    padding-inline: 12px;
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+.button.primary {
+    float: right;
+    height: 48px;
+    padding-inline: 24px;
+    font-weight: 700;
+}
+
+.button:hover {
+    filter: brightness(0.8);
+}
+
+.render {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    margin-bottom: 12px;
+    background-color: #ffffff;
+    border: 1px solid var(--color-ltgrey2);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.render.fullscreen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: calc(100vw - 48px);
+    height: calc(100vh - 48px);
+    z-index: 9998;
+}
+
+.minimize {
+    padding: 6px;
+    background-color: var(--color-ltgrey1);
+    text-align: right;
+    cursor: pointer;
+}
+
+.render iframe {
+    flex: 1;
+    width: 100%;
+    border: 0;
+}
+
+.checkbox {
+    accent-color: var(--color-primary);
+}
+
+.error {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-error);
+    text-align: center;
+    opacity: 0;
+    z-index: 9999;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.error.visible {
+    opacity: 0.9;
+}

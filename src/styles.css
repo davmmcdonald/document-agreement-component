@@ -3,3 +3,11 @@
     margin: 0;
     font-family: sans-serif;
 }
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+    padding: 24px;
+}

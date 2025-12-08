@@ -10,4 +10,5 @@ export interface DocumentGroup {
     type: string;
     variations: LegalDocument[];
     active: LegalDocument;
+    fullscreen: boolean;
 }
