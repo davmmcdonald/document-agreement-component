@@ -26,6 +26,7 @@ ng serve
 ```
 
 Open your browser at `http://localhost:4200`.
+
 4. Uses a mock service to provide document metadata and PDFs (from `src/assets/`).
 
 ---
