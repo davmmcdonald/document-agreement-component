@@ -1,0 +1,25 @@
+<div>
+    <h1>Legal Document Review</h1>
+    <p class="instructions">Please review each document and check the box to indicate your agreement. You must agree to all documents before
+        continuing.</p>
+    <form class="form">
+        @for (group of groupedDocuments; track group) {
+        <div class="group">
+            <div class="details">
+                <div>
+                    <h2>{{ group.type | titlecase}} <span class="version">(v{{ group.active.version }})</span></h2>
+                    @if (group.active.changesOnly) {
+                    <span class="tag">Changes Only</span>
+                    }
+                </div>
+                <button class="button light">View Full Document</button>
+            </div>
+            <div class="wrapper">
+                <iframe></iframe>
+            </div>
+        </div>
+        }
+        <button class="button primary">Submit</button>
+        <p></p>
+    </form>
+</div>
